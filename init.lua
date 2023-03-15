@@ -35,7 +35,8 @@ require('lazy').setup({
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  { -- LSP Configuration & Plugins
+  {
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -51,14 +52,16 @@ require('lazy').setup({
     },
   },
 
-  { -- Autocompletion
+  {
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  { 'folke/which-key.nvim',          opts = {} },
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -72,15 +75,18 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme
+  {
+    -- Theme
     'rebelot/kanagawa.nvim',
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'kanagawa'
+      vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
     end,
   },
 
-  { -- Set lualine as statusline
+  {
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -93,7 +99,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Add indentation guides even on blank lines
+  {
+    -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
@@ -104,7 +111,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -122,7 +129,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -168,6 +176,8 @@ vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
+
+vim.o.relativenumber = true
 
 -- Save undo history
 vim.o.undofile = true
@@ -250,12 +260,12 @@ vim.keymap.set('n', '<C-k>', ':wincmd k<CR>', { desc = 'Move to top window' })
 vim.keymap.set('n', '<C-l>', ':wincmd l<CR>', { desc = 'Move to right window' })
 
 -- VIM REPLACE BASE KEYMAPS
-vim.keymap.set('v', 'z', '"*x :let @+=@*<CR>', { noremap=true, silent=true, desc = 'Cut' })
-vim.keymap.set('v', 'e', '"*y :let @+=@*<CR>', { noremap=true, silent=true, desc = 'Copy' })
-vim.keymap.set('n', 'r', '"+p', { noremap=true, silent=true, desc = 'Paste' })
+vim.keymap.set('v', 'z', '"*x :let @+=@*<CR>', { noremap = true, silent = true, desc = 'Cut' })
+vim.keymap.set('v', 'e', '"*y :let @+=@*<CR>', { noremap = true, silent = true, desc = 'Copy' })
+vim.keymap.set('n', 'r', '"+p', { noremap = true, silent = true, desc = 'Paste' })
 
-vim.keymap.set('v', 'K', ':move \'<-2<CR>gv-gv', { noremap=true, silent=true, desc = 'Move line up' })
-vim.keymap.set('v', 'J', ':move \'>+1<CR>gv-gv', { noremap=true, silent=true, desc = 'Move line down' })
+vim.keymap.set('v', 'K', ':move \'<-2<CR>gv-gv', { noremap = true, silent = true, desc = 'Move line up' })
+vim.keymap.set('v', 'J', ':move \'>+1<CR>gv-gv', { noremap = true, silent = true, desc = 'Move line down' })
 
 
 -- vim.keymap.set('n', '<leader>qr', require('telescope.builtin').resume, {desc= '[S]earch [R]esume'})
@@ -266,7 +276,8 @@ vim.keymap.set('v', 'J', ':move \'>+1<CR>gv-gv', { noremap=true, silent=true, de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim', 'gitignore', 'graphql', 'javascript', 'html', 'json', 'markdown', 'regex', 'scss', 'svelte', 'css' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'help', 'vim', 'gitignore',
+    'graphql', 'javascript', 'html', 'json', 'markdown', 'regex', 'scss', 'svelte', 'css' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = true,
@@ -370,7 +381,7 @@ local on_attach = function(_, bufnr)
   -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   -- nmap('<leader>wl', function()
-    -- print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  -- print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   -- end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
